@@ -4,6 +4,7 @@
 define kakek = Character("Kakek", color="#7f8c8d", image="kakek")
 define rana = Character("Rana", color="#3498db", image="rana")
 define pedagang = Character("Pedagang", color="#e74c3c", image="pedagang")
+define koko = Character("Koko", color="#3498db")
 
 transform fit_screen:
     xysize (1920, 1080)
@@ -13,6 +14,7 @@ style transparent_frame:
 
 # Mulai game
 label start:
+    stop music
     scene bg kakek with fade
     show kakek normal at right:
         zoom 0.3
@@ -37,7 +39,9 @@ label start:
     hide rana
     scene bg food festival2 with fade
 
+    play music "keramaian.mp3" loop
     narrator "rana akhirnya tiba di festival kuliner. Banyak sekali stand makanan dan minuman dari berbagai daerah Nusantara."
+    stop music
     call screen choose_stall
 
     return
@@ -52,34 +56,18 @@ screen choose_stall():
             xpos 0.5
             ypos 0.5
             anchor (0.5,0.3)
-            spacing 60
+            spacing 450
             imagebutton:
                 idle "stall/stall_pempek_hover.png"
                 hover "stall/stall_pempek_hover.png"
                 action Jump("beli_makan")
-                at Transform(zoom=(0.4))
+                at Transform(zoom=(0.7))
             
             imagebutton:
                 idle "stall/stall_bir_pletok_hover.png"
                 hover "stall/stall_bir_pletok_hover.png"
                 action Jump("beli_minum")
-                at Transform(zoom=(0.4))
-
-screen pempek_grid():    
-    frame :
-        style "transparent_frame"
-        xpos 0.5
-        ypos 0.5
-        anchor(0.5,0.5)
-        grid 2 2:
-            add "pempek/pempek adaan.png":
-                zoom 0.2
-            add "pempek/pempek kapal selam.png":
-                zoom 0.2
-            add "pempek/pempek kulit.png":
-                zoom 0.2
-            add "pempek/pempek lenjer.png":
-                zoom 0.2
+                at Transform(zoom=(0.8))
 
 screen pempek_lenjer():
     frame :
@@ -127,15 +115,14 @@ label beli_makan:
 
     rana "Pak, pempeknya yang mana yang enak ya?"
 
-    show screen pempek_grid with dissolve
     pedagang "Wah, banyak pilihan, Teh. Ada yang lenjer, kulit, kapal selam, adaan, tekwan, dan masih banyak lagi. Teteh mau yang mana nih? Biar saya jelaskan sedikit tentang masing-masing."
   
     show rana think at left with dissolve:
         zoom 0.3
     rana "Wah, banyak banget ya. Saya bingung nih. Yang membedakan apa sih masing-masing jenis pempek itu?"
     
-    hide screen pempek_grid with dissolve
-
+    show rana neutral1 at left with dissolve:
+        zoom 0.3
     pedagang "Bedanya ada di bentuk dan isiannya, Teh."
 
     show screen pempek_lenjer with dissolve
@@ -226,13 +213,18 @@ label beli_makan:
                 $ result3 = "apek"
 
         if result3 == "koko":
-            show koko_image at center
+            show dias happy:
+                zoom 0.3
+                xpos 0.1
+                ypos 0.5
+                anchor(0.5,0.5)
+            koko "???"
+            hide dias
             show pedagang wrong at right:
                 zoom 0.3
-            pedagang "Wah, sayang sekali Teh. Jawabannya salah. Pempek gratisnya nggak jadi ya!"
-            hide koko_image
-            show rana sad at left:
+            show rana think at left:
                 zoom 0.3
+            pedagang "Wah, sayang sekali Teh. Jawabannya salah. Pempek gratisnya nggak jadi ya!"
         elif result3 == "apek":
             show rana happy at left:
                 zoom 0.3
@@ -250,16 +242,17 @@ label beli_makan:
         zoom 0.3
     show pedagang neutral at right with dissolve:
         zoom 0.3
-    pedagang "Ngomong-ngomong, Teteh tahu nggak sejarah pempek ini?"
-    show rana think at left with dissolve:
+    pedagang  "Teteh penasaran ga bagaimana proses pembuatan pempek"
+    show rana happy at left with dissolve:
         zoom 0.3
-    rana "Enggak, Pak. Ceritain dong!"
-    pedagang "Jadi, sejarah pempek ini dimulai dari pengaruh budaya Tiongkok di Palembang..."
+    rana "Penasaran, Pak. Ceritain dong!"
 
-    # Narasi sejarah pempek
-    scene bg_pempek_story with fade
-    pedagang "Dulu, pedagang Tiongkok berkeliling menjual makanan ini dan dikenal dengan sebutan 'Apek'."
-    pedagang "Mereka membawa pempek yang berbahan dasar ikan tenggiri dan sagu, yang kini jadi ikon kuliner Palembang."
+    # pedagang "Jadi, sejarah pempek ini dimulai dari pengaruh budaya Tiongkok di Palembang..."
+
+    # # Narasi sejarah pempek
+    # scene bg_pempek_story with fade
+    # pedagang "Dulu, pedagang Tiongkok berkeliling menjual makanan ini dan dikenal dengan sebutan 'Apek'."
+    # pedagang "Mereka membawa pempek yang berbahan dasar ikan tenggiri dan sagu, yang kini jadi ikon kuliner Palembang."
     jump sejarah_pempek
 
 label sejarah_pempek:
@@ -290,6 +283,7 @@ label presto_fail:
     jump sejarah_pempek
 
 label goreng_fail:
+    play music "menggoreng.mp3" loop
     show ikan goreng:
         zoom 0.3
         xpos 0.5
@@ -297,6 +291,7 @@ label goreng_fail:
         anchor(0.5,0.5)
     pedagang "Yah, kalo digoreng mah jadi ikan goreng, Teh."
     hide ikan goreng
+    stop music
     jump sejarah_pempek
 
 label giling_success:
@@ -521,25 +516,41 @@ label tepung:
                 narrator "Adonan berhasil diuleni dan dibentuk."
                 hide tepung terigu
                 $ answer = True
+    play music "rebus.mp3" loop
     show rebus_adonan
     narrator "Adonan direbus hingga matang."
     hide rebus_adonan
+    stop music
     jump jualan_keliling
 
 
 label jualan_keliling:
-    scene bg_pedagang_keliling
-    pedagang "Pada zaman dahulu, sekitar abad ke-16, pada masa Sultan Badaruddin II, pempek dijual secara keliling oleh seorang Tiongkok."
-    pedagang "Orang-orang biasa memanggilnya dengan sapaan 'Apek'."
-    narrator "Pada awalnya, pempek dikenal dengan nama 'kelesan', yang diolah hingga dapat disimpan dalam waktu lama."
+    # scene bg_pedagang_keliling
+    # pedagang "Pada zaman dahulu, sekitar abad ke-16, pada masa Sultan Badaruddin II, pempek dijual secara keliling oleh seorang Tiongkok."
+    # pedagang "Orang-orang biasa memanggilnya dengan sapaan 'Apek'."
+    # narrator "Pada awalnya, pempek dikenal dengan nama 'kelesan', yang diolah hingga dapat disimpan dalam waktu lama."
 
-    "Setelah rana mendengarkan pemaparan tentang asal usul pempek, rana menyadari bahwa kuliner nusantara merupakan kearifan lokal yang kaya akan sejarah dan harus dilestarikan."
+    # "Setelah rana mendengarkan pemaparan tentang asal usul pempek, rana menyadari bahwa kuliner nusantara merupakan kearifan lokal yang kaya akan sejarah dan harus dilestarikan."
+    # rana "Wah, aku baru tahu sejarah pempek ternyata menarik banget."
+    # pedagang "Itulah kenapa kita harus menjaga makanan tradisional seperti ini."
+
+    # scene bg_food_festival
+    # pedagang "Ini pempek gratis untuk Teteh karena sudah benar menjawab pertanyaan dan mendengar cerita sejarahnya."
+
+    scene bg pedagang keliling
+    pedagang "zaman dahulu, makanan pempek itu bernama asli kelesan, yakni makanan berbahan ikan dan sagu yang tahan disimpan lama." 
+    pedagang "Sedangkan nama \"pempek\" sendiri muncul ketika banyak pedagang lelaki Tionghoa berkeliling kampung untuk menjual kelesan."
+    play music "pek.mp3" loop
+    pedagang "\"Apek\" adalah sebutan untuk laki laki tua keturuan tionghoa. Jadi pada masa itu, kalau hendak membeli kelesan penjualnya sering dipanggil, \"pek! Pek!\""
+    stop music
+    pedagang "Istilah itu pun nyangkut, sehingga lambat laun masyarakat menyebut kelesan yang dijual keliling itu dengan nama \"pempek\""
+
+    scene bg stall pempek
+    narrator "Setelah rana mendengarkan pemaparan tentang asal usul pempek, rana menyadari bahwa kuliner nusantara merupakan kearifan lokal yang kaya akan sejarah dan harus dilestarikan."
     rana "Wah, aku baru tahu sejarah pempek ternyata menarik banget."
     pedagang "Itulah kenapa kita harus menjaga makanan tradisional seperti ini."
 
-    scene bg_food_festival
     pedagang "Ini pempek gratis untuk Teteh karena sudah benar menjawab pertanyaan dan mendengar cerita sejarahnya."
-
     return
 
 # Label beli minum (analog dengan pempek)
