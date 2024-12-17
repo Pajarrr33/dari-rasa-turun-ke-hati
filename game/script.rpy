@@ -550,6 +550,11 @@ label jualan_keliling:
     rana "Wah, aku baru tahu sejarah pempek ternyata menarik banget."
     pedagang "Itulah kenapa kita harus menjaga makanan tradisional seperti ini."
 
+    show pempek komplit:
+        zoom 0.3
+        xpos 0.5
+        ypos 0.5
+        anchor(0.5,0.5)
     pedagang "Ini pempek gratis untuk Teteh karena sudah benar menjawab pertanyaan dan mendengar cerita sejarahnya."
     return
 
