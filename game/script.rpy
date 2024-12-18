@@ -14,7 +14,7 @@ style transparent_frame:
 
 # Mulai game
 label start:
-    stop music
+    play music "audio/main music.mp3" fadein 1.0 volume 0.1
     scene bg kakek with fade
     show kakek normal at right:
         zoom 0.3
@@ -112,7 +112,7 @@ label beli_makan:
         zoom 0.3
     show pedagang neutral  at right:
         zoom 0.3
-
+    play music "audio/main music.mp3" fadein 1.0 volume 0.1
     rana "Pak, pempeknya yang mana yang enak ya?"
 
     pedagang "Wah, banyak pilihan, Teh. Ada yang lenjer, kulit, kapal selam, adaan, tekwan, dan masih banyak lagi. Teteh mau yang mana nih? Biar saya jelaskan sedikit tentang masing-masing."
@@ -257,6 +257,7 @@ label beli_makan:
 
 label sejarah_pempek:
     scene bg food festival
+    play music "audio/main music.mp3" fadein 1.0 volume 0.1
 
     pedagang "Konon, pempek dulunya adalah makanan para kaum bangsawan."
     pedagang "Bahan-bahannya nggak banyak sih. Ada ikan tenggiri, tepung sagu, air es, penyedap rasa, dan garam."
@@ -376,6 +377,7 @@ label giling_success:
 
 label bumbu:
     scene bg_dapur_pempek
+    play music "audio/main music.mp3" fadein 1.0 volume 0.1
     $ bumbu = {"garam": False, "penyedap_rasa": False, "gula": False}
 
     menu:
@@ -488,6 +490,7 @@ label bumbu:
 
 label tepung:
     scene bg_dapur_pempek
+    play music "audio/main music.mp3" fadein 1.0 volume 0.1
     $ answer = False
     while not answer:
         menu:
@@ -521,8 +524,23 @@ label tepung:
     narrator "Adonan direbus hingga matang."
     hide rebus_adonan
     stop music
-    jump jualan_keliling
+    jump sejarah
 
+label sejarah:
+    scene bg_dapur_pempek
+    play music "audio/main music.mp3" fadein 1.0 volume 0.1
+    pedagang "Bagaimana dulu pempek dijual?"
+    menu:
+        "Dijual di satu tempat (Festival)":
+            jump dijual_ditempat
+        "Dijual keliling":
+            jump jualan_keliling
+
+label dijual_ditempat:
+    scene bg foodfesh salah tempat
+    play music "audio/main music.mp3" fadein 1.0 volume 0.1
+    pedagang "Dulu mah gk ada festival teh"
+    jump sejarah
 
 label jualan_keliling:
     # scene bg_pedagang_keliling
@@ -538,6 +556,8 @@ label jualan_keliling:
     # pedagang "Ini pempek gratis untuk Teteh karena sudah benar menjawab pertanyaan dan mendengar cerita sejarahnya."
 
     scene bg pedagang keliling
+    play music "audio/main music.mp3" fadein 1.0 volume 0.1
+    pedagang "Betul sekali, Teh! Kalau gitu kita langsung bahas sejarahnya yuk!"
     pedagang "zaman dahulu, makanan pempek itu bernama asli kelesan, yakni makanan berbahan ikan dan sagu yang tahan disimpan lama." 
     pedagang "Sedangkan nama \"pempek\" sendiri muncul ketika banyak pedagang lelaki Tionghoa berkeliling kampung untuk menjual kelesan."
     play music "pek.mp3" loop
