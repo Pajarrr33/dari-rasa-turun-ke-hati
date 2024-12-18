@@ -642,23 +642,49 @@ label beli_minum:
         show rana happy at right:
             zoom 0.3
         pedagang "Bagus pilihan Teteh! Bir pletok original ini sangat segar."
+        pedagang "Rasa manis dan sedikit pahitnya sangat seimbang, cocok untuk menemani makanan."
+        rana "Wah, saya suka yang segar-segar! Boleh saya coba?"
+
+        # Menampilkan bir pletok original
+        show bir_pletok_original at center:
+            zoom 0.3
+        narrator "Rana mencicipi bir pletok original dan merasakan kesegaran yang luar biasa."
+        rana "Hmm, enak banget! Rasanya pas di lidah."
+
     elif result == "jahe":
         show pedagang happy at left:
             zoom 0.3
         show rana happy at right:
             zoom 0.3
         pedagang "Bir pletok jahe ini cocok untuk yang suka rasa pedas."
+        pedagang "Jahe memberikan sensasi hangat yang pas, terutama saat cuaca dingin."
+        rana "Saya suka jahe! Boleh saya coba?"
+
+        # Menampilkan bir pletok jahe
+        show bir_pletok_jahe at center:
+            zoom 0.3
+        narrator "Rana mencicipi bir pletok jahe dan merasakan kehangatan yang menyebar."
+        rana "Wow, ini hangat dan pedas! Cocok banget untuk cuaca dingin."
+
     elif result == "rempah":
         show pedagang happy at left:
             zoom 0.3
         show rana happy at right:
             zoom 0.3
         pedagang "Bir pletok rempah ini memiliki rasa yang kaya dan unik."
+        pedagang "Kombinasi rempahnya membuat setiap tegukan terasa istimewa."
+        rana "Saya penasaran dengan rasa rempahnya! Boleh saya coba?"
+
+        # Menampilkan bir pletok rempah
+        show bir_pletok_rempah at center:
+            zoom 0.3
+        narrator "Rana mencicipi bir pletok rempah dan merasakan kompleksitas rasa yang luar biasa."
+        rana "Ini luar biasa! Rasa rempahnya bikin saya ingin terus mencicipi."
 
     # Menyelesaikan interaksi
     pedagang "Silakan Teteh nikmati bir pletoknya!"
     return
-    #on progess by another one
+
 
 #note: ini aku baru masuki dialog script kasar dan kemungkinan akan banyak sekali error, soalnya ngandelin gpt dengan command doang T-T
 #mau minta tolong untuk benerin yang error, sama custom dialog. Sketch rancangan tampilan game dan asset grafis design minta link drivenya ke Mima
