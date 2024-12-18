@@ -9,13 +9,41 @@ define koko = Character("Koko", color="#3498db")
 transform fit_screen:
     xysize (1920, 1080)
 
+screen disclaimer():
+    tag disclaimer
+    frame:
+        style "black_frame"
+        xpos 0.5
+        ypos 0.5
+        anchor (0.5, 0.5)
+        padding (20, 20)
+
+        vbox:
+            spacing 10  # Optional: Add space between the lines
+
+            text "Disclaimer":
+                color "#ffff"
+                size 80
+                xalign 0.5  # Center horizontally
+                yalign 0.5
+            
+            text "Semua kesamaan nama, karakter, tempat dan peristiwa hanyalah kebetulan belaka.":
+                color "#ffff"
+                size 60
+                xalign 0.5  # Center horizontally
+                yalign 0.5
 style transparent_frame:
     background None  # Removes the background
 
+style black_frame:
+    background "black"
 # Mulai game
 label start:
+    show screen disclaimer
+    pause 3
+    hide screen disclaimer
     play music "audio/main music.mp3" fadein 1.0 volume 0.1
-    scene bg kakek with fade
+    scene bg kakek 
     show kakek normal at right:
         zoom 0.3
     show rana doomscrolling at left:
@@ -558,12 +586,15 @@ label jualan_keliling:
     scene bg pedagang keliling
     play music "audio/main music.mp3" fadein 1.0 volume 0.1
     pedagang "Betul sekali, Teh! Kalau gitu kita langsung bahas sejarahnya yuk!"
+    show asongan at center:
+        zoom 0.3
     pedagang "zaman dahulu, makanan pempek itu bernama asli kelesan, yakni makanan berbahan ikan dan sagu yang tahan disimpan lama." 
     pedagang "Sedangkan nama \"pempek\" sendiri muncul ketika banyak pedagang lelaki Tionghoa berkeliling kampung untuk menjual kelesan."
     play music "pek.mp3" loop
     pedagang "\"Apek\" adalah sebutan untuk laki laki tua keturuan tionghoa. Jadi pada masa itu, kalau hendak membeli kelesan penjualnya sering dipanggil, \"pek! Pek!\""
     stop music
     pedagang "Istilah itu pun nyangkut, sehingga lambat laun masyarakat menyebut kelesan yang dijual keliling itu dengan nama \"pempek\""
+    hide asongan
 
     scene bg stall pempek
     narrator "Setelah rana mendengarkan pemaparan tentang asal usul pempek, rana menyadari bahwa kuliner nusantara merupakan kearifan lokal yang kaya akan sejarah dan harus dilestarikan."
@@ -580,6 +611,53 @@ label jualan_keliling:
 
 # Label beli minum (analog dengan pempek)
 label beli_minum:
+    scene bg stall bir_pletok with fade
+    show rana neutral1 at right:
+        zoom 0.3
+    show pedagang neutral at left:
+        zoom 0.3
+    play music "audio/main music.mp3" fadein 1.0 volume 0.1
+    rana "Pak, bir pletoknya yang mana yang enak ya?"
+
+    pedagang "Wah, bir pletok ini terkenal dengan rasa rempahnya. Ada beberapa varian, Teteh mau yang mana?"
+  
+    show rana think at right with dissolve:
+        zoom 0.3
+    rana "Bisa jelasin sedikit tentang varian yang ada?"
+
+    pedagang "Tentu! Ada bir pletok original, bir pletok jahe, dan bir pletok rempah. Yang mana yang ingin Teteh coba?"
+    
+    # Menambahkan menu untuk memilih varian bir pletok
+    menu:
+        "Bir Pletok Original":
+            $ result = "original"
+        "Bir Pletok Jahe":
+            $ result = "jahe"
+        "Bir Pletok Rempah":
+            $ result = "rempah"
+
+    if result == "original":
+        show pedagang happy at left:
+            zoom 0.3
+        show rana happy at right:
+            zoom 0.3
+        pedagang "Bagus pilihan Teteh! Bir pletok original ini sangat segar."
+    elif result == "jahe":
+        show pedagang happy at left:
+            zoom 0.3
+        show rana happy at right:
+            zoom 0.3
+        pedagang "Bir pletok jahe ini cocok untuk yang suka rasa pedas."
+    elif result == "rempah":
+        show pedagang happy at left:
+            zoom 0.3
+        show rana happy at right:
+            zoom 0.3
+        pedagang "Bir pletok rempah ini memiliki rasa yang kaya dan unik."
+
+    # Menyelesaikan interaksi
+    pedagang "Silakan Teteh nikmati bir pletoknya!"
+    return
     #on progess by another one
 
 #note: ini aku baru masuki dialog script kasar dan kemungkinan akan banyak sekali error, soalnya ngandelin gpt dengan command doang T-T

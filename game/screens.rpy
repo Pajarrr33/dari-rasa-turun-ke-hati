@@ -12,6 +12,7 @@ init:
 ################################################################################
 ## Styles
 ################################################################################
+default button_visible = True
 
 style default:
     properties gui.text_properties()
@@ -302,10 +303,11 @@ screen navigation():
 
         if main_menu:
             
-            imagebutton:
-                idle "tombol start"
-                action Start()
-                at imagebuttonzoom
+            if button_visible:
+                imagebutton:
+                    idle "tombol start"
+                    action Start()
+                    at imagebuttonzoom
 
             # textbutton _("Start") action Start()
         else:
@@ -366,6 +368,18 @@ screen title():
         
         add "judul.png" at titlezoom
 
+screen logo_itb():
+
+    tag logo_itb
+
+    vbox:
+        xpos 0.0
+        ypos 1.0
+        anchor(0.0,1.0)
+
+        add "logo itb.png":
+            zoom 0.2
+
 
 ## Main Menu screen ############################################################
 ##
@@ -392,17 +406,14 @@ screen main_menu():
     ## contents of the main menu are in the navigation screen.
     use navigation
 
+    use logo_itb
+
     if gui.show_name:
 
         vbox:
             style "main_menu_vbox"
 
-            text "[config.name!t]":
-                style "main_menu_title"
-
-            text "[config.version]":
-                style "main_menu_version"
-
+            textbutton _("About") action [SetVariable("button_visible", False),ShowMenu("about")]
 
 style main_menu_frame is empty
 style main_menu_vbox is vbox
@@ -505,7 +516,7 @@ screen game_menu(title, scroll=None, yinitial=0.0, spacing=0):
     textbutton _("Return"):
         style "return_button"
 
-        action Return()
+        action [SetVariable("button_visible", True),Return()]
 
     label title
 
@@ -576,6 +587,7 @@ screen about():
 
     tag menu
 
+
     ## This use statement includes the game_menu screen inside this one. The
     ## vbox child is then included inside the viewport inside the game_menu
     ## screen.
@@ -584,15 +596,27 @@ screen about():
         style_prefix "about"
 
         vbox:
+            spacing 10
 
-            label "[config.name!t]"
-            text _("Version [config.version!t]\n")
+            text ("Tugas Besar PKWN")
 
-            ## gui.about is usually set in options.rpy.
-            if gui.about:
-                text "[gui.about!t]\n"
+            text ("Project Manager : Nizar Taptajani (10523042-Kimia)")
 
-            text _("Made with {a=https://www.renpy.org/}Ren'Py{/a} [renpy.version_only].\n\n[renpy.license!t]")
+            text ("Game Designer: Ahda Naila Andyni (10523067-Kimia)")
+
+            text ("Script Writer/Story Developer : Tamima Meirizqeena (10523024-kimia), Siti Rahma Fadila (10523012) dan Tabbyan Irlizcha Shaquilla (10523064-kimia)")
+
+            text ("Programmer: Muhammad Fauzan Ramadhan (10523056-kimia) dan Hafidz Yasifa Patty (18322004-Teknik Biomedis)")
+
+            text ("Graphic Designer/Illustrator: Adeline Nathalie Jonathan (17323022-Design interior), Raras Kaila Mitayani (17323057-Design interior) dan Athiya Paramitha (17323061-Design interior)")
+
+            text ("UI/UX Designer: Michael Senjaya (15023065-Teknik Sipil)")
+
+            text ("Sound Designer/Composer: Attrisa Simbolon (10523047-kimia)")
+
+            text ("Quality Assurance (QA) Tester: Syiera Amelia Alvita Sangjaya (10523010-Kimia) dan Nayla Prasista Purbadi (10523048)")
+
+            text ("Publication Specialist: Dwi Andini (10523080-kimia) dan M Khalif Rayyan (15023122-Teknik Sipil)")
 
 
 style about_label is gui_label
