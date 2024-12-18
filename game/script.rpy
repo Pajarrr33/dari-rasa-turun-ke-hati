@@ -580,6 +580,53 @@ label jualan_keliling:
 
 # Label beli minum (analog dengan pempek)
 label beli_minum:
+    scene bg stall bir_pletok with fade
+    show rana neutral1 at left:
+        zoom 0.3
+    show pedagang neutral at right:
+        zoom 0.3
+    play music "audio/main music.mp3" fadein 1.0 volume 0.1
+    rana "Pak, bir pletoknya yang mana yang enak ya?"
+
+    pedagang "Wah, bir pletok ini terkenal dengan rasa rempahnya. Ada beberapa varian, Teteh mau yang mana?"
+  
+    show rana think at left with dissolve:
+        zoom 0.3
+    rana "Bisa jelasin sedikit tentang varian yang ada?"
+
+    pedagang "Tentu! Ada bir pletok original, bir pletok jahe, dan bir pletok rempah. Yang mana yang ingin Teteh coba?"
+    
+    # Menambahkan menu untuk memilih varian bir pletok
+    menu:
+        "Bir Pletok Original":
+            $ result = "original"
+        "Bir Pletok Jahe":
+            $ result = "jahe"
+        "Bir Pletok Rempah":
+            $ result = "rempah"
+
+    if result == "original":
+        show pedagang happy at right:
+            zoom 0.3
+        show rana happy at left:
+            zoom 0.3
+        pedagang "Bagus pilihan Teteh! Bir pletok original ini sangat segar."
+    elif result == "jahe":
+        show pedagang happy at right:
+            zoom 0.3
+        show rana happy at left:
+            zoom 0.3
+        pedagang "Bir pletok jahe ini cocok untuk yang suka rasa pedas."
+    elif result == "rempah":
+        show pedagang happy at right:
+            zoom 0.3
+        show rana happy at left:
+            zoom 0.3
+        pedagang "Bir pletok rempah ini memiliki rasa yang kaya dan unik."
+
+    # Menyelesaikan interaksi
+    pedagang "Silakan Teteh nikmati bir pletoknya!"
+    return
     #on progess by another one
 
 #note: ini aku baru masuki dialog script kasar dan kemungkinan akan banyak sekali error, soalnya ngandelin gpt dengan command doang T-T
